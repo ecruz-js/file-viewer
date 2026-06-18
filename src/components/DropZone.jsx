@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react'
+import { FileUp } from 'lucide-react'
 import { acceptAttribute } from '../viewers/registry.js'
+import { cn } from '../lib/utils.js'
 
 /**
  * Zona inicial para seleccionar o arrastrar archivos. Llama a onFiles(FileList)
@@ -17,7 +19,10 @@ export default function DropZone({ onFiles }) {
 
   return (
     <div
-      className={dragging ? 'dropzone dragging' : 'dropzone'}
+      className={cn(
+        'm-8 flex flex-1 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed text-center text-muted-foreground transition-colors',
+        dragging ? 'border-ring bg-accent/30' : 'hover:border-ring/60 hover:bg-accent/20',
+      )}
       onDragOver={(e) => {
         e.preventDefault()
         setDragging(true)
@@ -26,10 +31,10 @@ export default function DropZone({ onFiles }) {
       onDrop={handleDrop}
       onClick={() => inputRef.current?.click()}
     >
-      <div className="dropzone-icon">📄</div>
-      <h2>Arrastra tus archivos aquí</h2>
-      <p>o haz clic para seleccionarlos (puedes elegir varios)</p>
-      <p className="dropzone-hint">Formatos soportados: Markdown (.md)</p>
+      <FileUp className="mb-4 size-12 stroke-[1.5]" />
+      <h2 className="text-xl font-semibold text-foreground">Arrastra tus archivos aquí</h2>
+      <p className="mt-1">o haz clic para seleccionarlos (puedes elegir varios)</p>
+      <p className="mt-4 text-xs opacity-70">Formatos soportados: Markdown (.md)</p>
       <input
         ref={inputRef}
         type="file"

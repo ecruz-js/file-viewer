@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { Files, Plus, X } from 'lucide-react'
 import DropZone from './components/DropZone.jsx'
 import Sidebar from './components/Sidebar.jsx'
+import { Button } from './components/ui/button.jsx'
 import { findViewer, acceptAttribute } from './viewers/registry.js'
 
 const MAX_SIZE = 5 * 1024 * 1024 // 5 MB
@@ -143,23 +145,25 @@ export default function App() {
   const hasFiles = items.length > 0
 
   return (
-    <div className="app">
-      <header className="app-header">
-        <div className="brand">
-          <span className="brand-icon">🗂️</span>
-          <span className="brand-name">File Viewer</span>
+    <div className="flex h-[100svh] flex-col overflow-hidden bg-background text-foreground">
+      <header className="flex shrink-0 items-center justify-between gap-4 border-b bg-card px-5 py-3">
+        <div className="flex items-center gap-2 font-semibold">
+          <Files className="size-5 text-muted-foreground" />
+          <span>File Viewer</span>
         </div>
         {hasFiles && (
-          <div className="header-actions">
-            <span className="file-count">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">
               {items.length} {items.length === 1 ? 'archivo' : 'archivos'}
             </span>
-            <button className="btn" onClick={() => inputRef.current?.click()}>
+            <Button variant="outline" size="sm" onClick={() => inputRef.current?.click()}>
+              <Plus />
               Añadir
-            </button>
-            <button className="btn ghost" onClick={clearAll}>
+            </Button>
+            <Button variant="ghost" size="sm" onClick={clearAll}>
+              <X />
               Cerrar todo
-            </button>
+            </Button>
           </div>
         )}
         <input
@@ -175,12 +179,16 @@ export default function App() {
         />
       </header>
 
-      {error && <div className="error-banner">{error}</div>}
+      {error && (
+        <div className="border-b border-destructive/50 bg-destructive/10 px-5 py-2.5 text-sm text-destructive">
+          {error}
+        </div>
+      )}
 
-      <main className="app-main">
+      <main className="flex min-h-0 min-w-0 flex-1 flex-col">
         {hasFiles ? (
           <div
-            className={dragging ? 'workspace dragging' : 'workspace'}
+            className="relative flex min-h-0 flex-1"
             onDragOver={(e) => {
               e.preventDefault()
               setDragging(true)
@@ -199,22 +207,28 @@ export default function App() {
               onRemove={removeFile}
               onAdd={() => inputRef.current?.click()}
             />
-            <section className="workspace-main">
+            <section className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
               {active && Viewer ? (
                 <Viewer content={active.content} name={active.name} onNavigate={navigateTo} />
               ) : (
-                <div className="empty-preview">Selecciona un archivo del panel izquierdo</div>
+                <div className="flex flex-1 items-center justify-center text-muted-foreground">
+                  Selecciona un archivo del panel izquierdo
+                </div>
               )}
             </section>
-            {dragging && <div className="drop-overlay">Suelta para añadir archivos</div>}
+            {dragging && (
+              <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-xl border-2 border-dashed border-ring bg-accent/30 text-lg backdrop-blur-sm">
+                Suelta para añadir archivos
+              </div>
+            )}
           </div>
         ) : (
           <DropZone onFiles={addFiles} />
         )}
       </main>
 
-      <footer className="app-footer">
-        <span>File Viewer · MVP Markdown</span>
+      <footer className="shrink-0 border-t px-5 py-2.5 text-center text-xs text-muted-foreground">
+        File Viewer · MVP Markdown
       </footer>
     </div>
   )

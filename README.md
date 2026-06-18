@@ -10,7 +10,8 @@ archivo (JSON, CSV, imágenes, etc.) mediante un registro de visores extensible.
 - Renderizado de **Markdown** con GitHub Flavored Markdown (tablas, listas de tareas, tachado)
 - Resaltado de sintaxis en bloques de código
 - Tres modos de vista: **previa**, **dividido** y **fuente**
-- Abrir archivos por **arrastrar y soltar** o por diálogo
+- **Subir varios archivos a la vez** y cambiar entre ellos desde un **panel lateral**
+- Abrir archivos por **arrastrar y soltar** (incluso varios) o por diálogo
 - 100 % en el cliente: los archivos no se suben a ningún servidor
 
 ## 🚀 Desarrollo
@@ -43,9 +44,10 @@ visor) lo detecta automáticamente.
 
 ```
 src/
-├── App.jsx                 # estado global, carga de archivos
+├── App.jsx                 # estado global, carga multi-archivo, archivo activo
 ├── components/
-│   └── DropZone.jsx        # selección / drag & drop
+│   ├── DropZone.jsx        # selección / drag & drop inicial
+│   └── Sidebar.jsx         # lista de archivos subidos + selección
 └── viewers/
     ├── registry.js         # registro de tipos de archivo
     └── MarkdownViewer.jsx  # visor de Markdown (MVP)

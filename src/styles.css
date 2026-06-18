@@ -76,6 +76,11 @@ body {
   white-space: nowrap;
 }
 
+.file-count {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
 .btn {
   background: var(--accent);
   color: white;
@@ -115,6 +120,151 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 0;
+}
+
+/* ---- Workspace (sidebar + visor) ---- */
+.workspace {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  position: relative;
+}
+
+.workspace-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.empty-preview {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.drop-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(47, 129, 247, 0.12);
+  border: 2px dashed var(--accent);
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 1.1rem;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ---- Sidebar ---- */
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  background: var(--bg-elevated);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.sidebar-add {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 0.25rem 0.55rem;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.sidebar-add:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.file-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.55rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  margin-bottom: 0.15rem;
+}
+
+.file-item:hover {
+  background: rgba(110, 118, 129, 0.12);
+}
+
+.file-item.active {
+  background: rgba(47, 129, 247, 0.18);
+}
+
+.file-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.file-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.file-name {
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-meta {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.file-remove {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0.2rem;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.file-remove:hover {
+  color: var(--danger);
+  background: rgba(248, 81, 73, 0.12);
 }
 
 /* ---- DropZone ---- */

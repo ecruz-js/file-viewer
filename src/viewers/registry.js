@@ -12,6 +12,7 @@ const viewers = [
   {
     id: 'markdown',
     label: 'Markdown',
+    icon: '📝',
     extensions: ['md', 'markdown', 'mdown', 'mkd'],
     accept: '.md,.markdown,.mdown,.mkd',
     component: MarkdownViewer,

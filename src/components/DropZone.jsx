@@ -2,18 +2,17 @@ import { useRef, useState } from 'react'
 import { acceptAttribute } from '../viewers/registry.js'
 
 /**
- * Zona para seleccionar o arrastrar un archivo. Llama a onFile(File) cuando
- * el usuario elige uno, ya sea por diálogo o por drag & drop.
+ * Zona inicial para seleccionar o arrastrar archivos. Llama a onFiles(FileList)
+ * cuando el usuario elige uno o varios, por diálogo o por drag & drop.
  */
-export default function DropZone({ onFile }) {
+export default function DropZone({ onFiles }) {
   const inputRef = useRef(null)
   const [dragging, setDragging] = useState(false)
 
   function handleDrop(e) {
     e.preventDefault()
     setDragging(false)
-    const file = e.dataTransfer.files?.[0]
-    if (file) onFile(file)
+    if (e.dataTransfer.files?.length) onFiles(e.dataTransfer.files)
   }
 
   return (
@@ -28,17 +27,17 @@ export default function DropZone({ onFile }) {
       onClick={() => inputRef.current?.click()}
     >
       <div className="dropzone-icon">📄</div>
-      <h2>Arrastra un archivo aquí</h2>
-      <p>o haz clic para seleccionarlo</p>
+      <h2>Arrastra tus archivos aquí</h2>
+      <p>o haz clic para seleccionarlos (puedes elegir varios)</p>
       <p className="dropzone-hint">Formatos soportados: Markdown (.md)</p>
       <input
         ref={inputRef}
         type="file"
         accept={acceptAttribute()}
+        multiple
         hidden
         onChange={(e) => {
-          const file = e.target.files?.[0]
-          if (file) onFile(file)
+          if (e.target.files?.length) onFiles(e.target.files)
           e.target.value = ''
         }}
       />

@@ -15,13 +15,13 @@ archivo (JSON, CSV, imágenes, etc.) mediante un registro de visores extensible.
 
 ## 🚀 Desarrollo
 
-Requisitos: Node.js 18+.
+Requisitos: [Bun](https://bun.sh) 1.0+.
 
 ```bash
-npm install
-npm run dev      # servidor de desarrollo en http://localhost:5173
-npm run build    # build de producción en dist/
-npm run preview  # sirve el build de producción localmente
+bun install
+bun run dev      # servidor de desarrollo en http://localhost:5173
+bun run build    # build de producción en dist/
+bun run preview  # sirve el build de producción localmente
 ```
 
 Abre la app y arrastra el archivo [`sample.md`](./sample.md) para probarla.

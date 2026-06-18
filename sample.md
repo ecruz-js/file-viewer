@@ -36,4 +36,12 @@ function saludar(nombre) {
 console.log(saludar('mundo'))
 ```
 
+## Wikilinks
+
+Sube también [`segundo.md`](./segundo.md) y prueba estos enlaces internos
+(cambian el preview **sin recargar** la página):
+
+- [[segundo]] — enlace por nombre de archivo
+- [[segundo|Ir al segundo documento]] — enlace con alias
+
 > Cita: el objetivo a largo plazo es un visor genérico de archivos.

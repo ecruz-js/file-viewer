@@ -11,6 +11,8 @@ archivo (JSON, CSV, imágenes, etc.) mediante un registro de visores extensible.
 - Resaltado de sintaxis en bloques de código
 - Tres modos de vista: **previa**, **dividido** y **fuente**
 - **Subir varios archivos a la vez** y cambiar entre ellos desde un **panel lateral**
+- **Wikilinks** `[[Archivo]]` y `[[Archivo|alias]]` que navegan entre archivos abiertos **sin recargar**
+- **Deep-link por URL** (`?file=<nombre>`) con soporte de atrás/adelante del navegador
 - Abrir archivos por **arrastrar y soltar** (incluso varios) o por diálogo
 - 100 % en el cliente: los archivos no se suben a ningún servidor
 

@@ -4,8 +4,14 @@ import DropZone from './components/DropZone.jsx'
 import Sidebar from './components/Sidebar.jsx'
 import { Button } from './components/ui/button.jsx'
 import { findViewer, acceptAttribute } from './viewers/registry.js'
+import { loadFiles, saveFiles, loadPrefs, savePrefs } from './lib/storage.js'
 
 const MAX_SIZE = 5 * 1024 * 1024 // 5 MB
+
+const FONT_MIN = 12
+const FONT_MAX = 32
+const FONT_STEP = 2
+const FONT_DEFAULT = 16
 
 /** Lee un File como texto y lo convierte en un item del visor, o un error. */
 function readFile(file) {
@@ -58,16 +64,39 @@ function fileParam() {
 }
 
 export default function App() {
-  const [items, setItems] = useState([]) // [{ id, name, content, viewer, size }]
+  const [items, setItems] = useState(loadFiles) // [{ id, name, content, viewer, size }]
   const [activeId, setActiveId] = useState(null)
   const [error, setError] = useState(null)
   const [dragging, setDragging] = useState(false)
+  const [fontSize, setFontSize] = useState(() => {
+    const { fontSize } = loadPrefs()
+    return typeof fontSize === 'number' ? fontSize : FONT_DEFAULT
+  })
   const inputRef = useRef(null)
   const itemsRef = useRef(items)
 
   useEffect(() => {
     itemsRef.current = items
   }, [items])
+
+  // Persistencia: guarda los archivos en cada cambio (avisa si no hay espacio).
+  useEffect(() => {
+    const ok = saveFiles(items)
+    if (!ok && items.length) {
+      setError(
+        'No se pudieron guardar los archivos (almacenamiento lleno). Seguirán solo en memoria hasta recargar.',
+      )
+    }
+  }, [items])
+
+  // Persistencia del tamaño de letra.
+  useEffect(() => {
+    savePrefs({ fontSize })
+  }, [fontSize])
+
+  const changeFont = useCallback((delta) => {
+    setFontSize((s) => Math.min(FONT_MAX, Math.max(FONT_MIN, s + delta)))
+  }, [])
 
   const addFiles = useCallback((fileList) => {
     const files = Array.from(fileList || [])
@@ -209,7 +238,17 @@ export default function App() {
             />
             <section className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
               {active && Viewer ? (
-                <Viewer content={active.content} name={active.name} onNavigate={navigateTo} />
+                <Viewer
+                  content={active.content}
+                  name={active.name}
+                  onNavigate={navigateTo}
+                  fontSize={fontSize}
+                  onFontDecrease={() => changeFont(-FONT_STEP)}
+                  onFontIncrease={() => changeFont(FONT_STEP)}
+                  onFontReset={() => setFontSize(FONT_DEFAULT)}
+                  fontMin={FONT_MIN}
+                  fontMax={FONT_MAX}
+                />
               ) : (
                 <div className="flex flex-1 items-center justify-center text-muted-foreground">
                   Selecciona un archivo del panel izquierdo

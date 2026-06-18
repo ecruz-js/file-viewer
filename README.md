@@ -13,6 +13,8 @@ archivo (JSON, CSV, imágenes, etc.) mediante un registro de visores extensible.
 - **Subir varios archivos a la vez** y cambiar entre ellos desde un **panel lateral**
 - **Wikilinks** `[[Archivo]]` y `[[Archivo|alias]]` que navegan entre archivos abiertos **sin recargar**
 - **Deep-link por URL** (`?file=<nombre>`) con soporte de atrás/adelante del navegador
+- **Persistencia entre recargas** — los archivos abiertos se guardan en `localStorage`
+- **Control de tamaño de letra** en el visor (se recuerda entre sesiones)
 - Abrir archivos por **arrastrar y soltar** (incluso varios) o por diálogo
 - 100 % en el cliente: los archivos no se suben a ningún servidor
 

@@ -29,6 +29,10 @@ export function findViewer(filename) {
   return viewers.find((v) => v.extensions.includes(ext)) || null
 }
 
+export function getViewerById(id) {
+  return viewers.find((v) => v.id === id) || null
+}
+
 /** Cadena lista para el atributo `accept` de un <input type="file">. */
 export function acceptAttribute() {
   return viewers.map((v) => v.accept).join(',')

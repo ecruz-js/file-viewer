@@ -24,26 +24,38 @@ export default function Sidebar({ items, activeId, onSelect, onRemove, onAdd }) 
         </Button>
       </div>
 
-      <ul className="flex-1 space-y-0.5 overflow-y-auto p-2">
+      <ul className="flex-1 space-y-1.5 overflow-y-auto p-2.5">
         {items.map((it) => (
           <li
             key={it.id}
             className={cn(
-              'group flex cursor-pointer items-center gap-2.5 rounded-md px-2.5 py-2 text-sm transition-colors',
-              it.id === activeId ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50',
+              'group relative flex cursor-pointer items-center gap-3 overflow-hidden rounded-lg border px-2.5 py-2 text-sm shadow-sm transition-colors',
+              it.id === activeId
+                ? 'border-border bg-accent text-accent-foreground'
+                : 'border-border/40 bg-muted/30 hover:border-border hover:bg-accent/50',
             )}
             onClick={() => onSelect(it.id)}
             title={it.name}
           >
-            <FileText className="size-4 shrink-0 text-muted-foreground" />
+            {it.id === activeId && (
+              <span className="absolute inset-y-1.5 left-0 w-1 rounded-r-full bg-primary" />
+            )}
+            <span
+              className={cn(
+                'flex size-9 shrink-0 items-center justify-center rounded-md border text-muted-foreground transition-colors',
+                it.id === activeId ? 'border-border bg-background' : 'border-border/40 bg-background/40',
+              )}
+            >
+              <FileText className="size-4" />
+            </span>
             <span className="flex min-w-0 flex-1 flex-col">
-              <span className="truncate">{it.name}</span>
-              <span className="text-xs text-muted-foreground">
+              <span className="truncate font-medium">{it.name}</span>
+              <span className="truncate text-xs text-muted-foreground">
                 {it.viewer.label} · {formatSize(it.size)}
               </span>
             </span>
             <button
-              className="shrink-0 rounded p-0.5 text-muted-foreground opacity-0 transition hover:bg-destructive/15 hover:text-destructive focus:opacity-100 group-hover:opacity-100"
+              className="shrink-0 rounded-md p-1 text-muted-foreground opacity-0 transition hover:bg-destructive/15 hover:text-destructive focus:opacity-100 group-hover:opacity-100"
               title="Quitar"
               onClick={(e) => {
                 e.stopPropagation()

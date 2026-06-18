@@ -32,7 +32,8 @@ body {
 .app {
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  height: 100svh;
+  overflow: hidden;
 }
 
 /* ---- Header ---- */
@@ -120,6 +121,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 0;
+  min-width: 0;
 }
 
 /* ---- Workspace (sidebar + visor) ---- */
@@ -135,6 +137,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 0;
+  min-width: 0;
   overflow: hidden;
 }
 
@@ -311,6 +314,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 0;
+  min-width: 0;
 }
 
 .viewer-toolbar {
@@ -345,6 +349,7 @@ body {
   flex: 1;
   overflow: auto;
   min-height: 0;
+  min-width: 0;
 }
 
 .viewer-content.mode-split {
@@ -354,6 +359,7 @@ body {
 
 .viewer-content.mode-split .pane {
   overflow: auto;
+  min-width: 0;
   border-right: 1px solid var(--border);
 }
 
@@ -374,10 +380,14 @@ body {
 
 /* ---- Markdown body ---- */
 .markdown-body {
-  max-width: 860px;
+  width: 100%;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 2rem 2.5rem;
   line-height: 1.7;
+  /* Rompe URLs/palabras largas para que no generen scroll horizontal */
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .markdown-body h1,
@@ -409,6 +419,7 @@ body {
   border: 1px solid var(--border);
   padding: 1rem;
   border-radius: var(--radius);
+  max-width: 100%;
   overflow: auto;
 }
 
@@ -438,6 +449,10 @@ body {
   border-collapse: collapse;
   width: 100%;
   margin: 1em 0;
+  /* Tablas con muchas columnas hacen scroll horizontal interno */
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 .markdown-body th,
